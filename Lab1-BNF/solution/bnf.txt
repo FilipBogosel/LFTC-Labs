@@ -1,0 +1,88 @@
+AutoDrive - Mini-Language Specification
+
+
+I. Alphabet:
+a. Upper (A-Z) and lowercase letters (a-z) of the English alphabet
+b. Decimal digits (0-9)
+c. Underline character '_'
+
+
+II. Lexic
+
+a. Special tokens:
+- operators: +  -  *  /  =  ==  !=  <  <=  >  >=
+- separators: (  )  [  ]  {  }  ;  ,
+- reserved words: else  if  int  program  read  real  while  write
+
+b. Identifiers:
+- a sequence of letters, digits, and underline, such that the first character is a letter (length <= 256 characters):
+    <identifier> ::= <letter> { <letter> | <digit> | "_" }
+    <letter> ::= "a" | "b" | ... | "z" | "A" | "B" | ... | "Z"
+    <digit> ::= "0" | "1" | ... | "9"
+
+c. Constants:
+1. integer:
+    <integer_constant> ::= "0" | [ <sign> ] <non_zero_digit> { <digit> }
+    <sign> ::= "+" | "-"
+    <non_zero_digit> ::= "1" | "2" | ... | "9"
+    <natural_number> ::= "0" | <non_zero_digit> { <digit> }
+
+2. real:
+    <real_constant> ::= <integer_constant> "." <digit> { <digit> }
+
+    <constant> ::= <integer_constant> | <real_constant>
+
+
+III. Syntax (tokens are specified between " and ")
+
+<program> ::= "program" <identifier> "{" <declaration_list> <statement_list> "}"
+
+<declaration_list> ::= <declaration> | <declaration> <declaration_list>
+
+<declaration> ::= <type> <identifier_list> ";"
+
+<identifier_list> ::= <identifier> | <identifier> "," <identifier_list>
+
+<type> ::= <simple_type> | <array_type>
+
+<simple_type> ::= "int" | "real"
+
+<array_type> ::= <simple_type> "[" <natural_number> "]"
+
+<compound_statement> ::= "{" <statement_list> "}"
+
+<statement_list> ::= <statement> | <statement> <statement_list>
+
+<statement> ::= <simple_statement> | <structured_statement>
+
+<simple_statement> ::= <assignment_statement> ";"| <io_statement> ";"
+
+<variable> ::= <identifier> | <identifier> "[" <expression> "]"
+
+<assignment_statement> ::= <variable> "=" <expression>
+
+<io_statement> ::= "read" "(" <variable> ")"
+                 | "write" "(" <expression> ")"
+
+<structured_statement> ::= <compound_statement>| <if_statement>| <while_statement>
+
+<if_statement> ::= "if" "(" <condition> ")" <statement>
+                 | "if" "(" <condition> ")" <statement> "else" <statement>
+
+<while_statement> ::= "while" "(" <condition> ")" <statement>
+
+<condition> ::= <expression> <relational_operator> <expression>
+
+<relational_operator> ::= "==" | "!=" | "<" | "<=" | ">" | ">="
+
+<expression> ::= <expression> "+" <term>
+               | <expression> "-" <term>
+               | <term>
+
+<term> ::= <term> "*" <factor>
+         | <term> "/" <factor>
+         | <factor>
+
+<factor> ::= "(" <expression> ")"
+           | <variable>
+           | <constant>
