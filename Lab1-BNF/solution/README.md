@@ -1,134 +1,139 @@
-# AutoDrive — Mini-Language Documentation
+# Mini-Language Documentation
 
 **Course:** Formal Languages and Compiler Design (LFTC)  
-**Lab 1** — BNF Specification & Use Case Documentation
+**Lab 1** — Mini-Language Specification & Use Case
 
 ---
 
-## Domain
+## 1. Language Overview
 
-AutoDrive is a small, C-style language designed for vehicle control systems. It simulates what an onboard car computer does: read sensor inputs, make threshold decisions, and command actuators like brakes or throttle.
+This is a minimal, C-style procedural programming language designed for basic numerical computations and data processing. It provides simple control flow, scalar variables, and fixed-size arrays with a clean, concise syntax.
 
-I chose this domain because every required statement maps naturally to automotive control logic: reading sensors, checking safety thresholds, updating vehicle state, and running control loops.
+### Key Characteristics:
+* **C-like syntax:** Block scoping with braces `{ ... }`, standard operators (`=`, `==`, `!=`), and parenthesized conditions for control statements.
+* **Predictable execution:** Static typing, upfront variable declarations, and simple sequential control flow.
+* **Minimal token set:** Only 8 reserved keywords, keeping parsing straightforward.
 
 ---
 
-## Types
+## 2. Types
 
-| Type | What it represents | Examples |
+| Type | Description | Example |
 |---|---|---|
-| `int` | Vehicle speed (km/h), RPM, gear, counters | `0`, `120`, `-1` |
-| `real` | Distance (m), acceleration, percentages | `3.14`, `0.5`, `-0.75` |
-| `T[N]` | Fixed-size array of type `T` and length `N` | `real[8]`, `int[4]` |
+| `int` | Whole numbers (positive, negative, zero) | `0`, `42`, `-10` |
+| `real` | Floating-point decimal numbers | `3.14`, `0.5`, `-1.25` |
+| `T[N]` | Fixed-size 1D array of type `T` and size `N` | `int[10]`, `real[5]` |
 
 ---
 
-## Statements & Why They're Needed
+## 3. Statements & Justifications
 
-### Assignment (`=`)
-Used to update vehicle state variables like target speed or braking force.
+### 3.1. Assignment (`=`)
+Used to store computed values or initialize variables.
 ```c
-target_speed = current_speed + 5;
+total = sum + 10;
 ```
 
-### Input / Output (`read`, `write`)
-`read` receives telemetry from physical sensors; `write` transmits commands to vehicle actuators or displays values.
+### 3.2. Input / Output (`read`, `write`)
+Used for basic program interaction: `read` retrieves input into a variable, and `write` outputs an expression or value.
 ```c
-read(front_distance);
-write(brake_pressure);
+read(value);
+write(result);
 ```
 
-### Conditional (`if (...) ... else ...`)
-Used for critical safety decisions — for example, checking if an obstacle is within the danger zone and immediately activating emergency brakes.
+### 3.3. Conditional (`if ... else`)
+Used for branching logic based on boolean comparison conditions.
 ```c
-if (front_distance < safe_distance) {
-    brake = 100;
+if (score >= 50) {
+    passed = 1;
 } else {
-    brake = 0;
+    passed = 0;
 }
 ```
 
-### Loop (`while (...) ...`)
-Used for cyclic control loops — for example, gradually adjusting speed until the cruise control setpoint is reached.
+### 3.4. Loop (`while`)
+Used for repetitive computations, accumulation loops, and array traversals.
 ```c
-while (current_speed < target_speed) {
-    current_speed = current_speed + 2;
-    write(current_speed);
+while (i < n) {
+    sum = sum + i;
+    i = i + 1;
 }
 ```
 
 ---
 
-## Example Programs
+## 4. Example Programs
 
-### 1. Emergency Braking
-Reads current speed and radar distance, calculates dynamic stopping distance, and activates emergency braking if the vehicle is too close to an obstacle.
+### Program 1: Maximum of Two Numbers
+Reads two integers from input, determines the maximum, and prints the result.
 
 ```c
-program EmergencyBraking {
-    int current_speed;
-    real radar_distance, safe_distance;
-    int brake_active;
+program MaxNumber {
+    int a, b;
+    int max;
 
-    read(current_speed);
-    read(radar_distance);
-    safe_distance = current_speed * 0.5 + 2.0;
+    read(a);
+    read(b);
 
-    if (radar_distance <= safe_distance) {
-        brake_active = 1;
-        write(brake_active);
+    if (a > b) {
+        max = a;
     } else {
-        brake_active = 0;
-        write(brake_active);
+        max = b;
     }
+
+    write(max);
 }
 ```
 
-### 2. Cruise Control
-Gradually increases speed in increments of 2 km/h until reaching the target setpoint.
+### Program 2: Sum of First N Numbers
+Reads a positive integer `n`, accumulates the sum of integers from 1 up to `n`, and outputs the total.
 
 ```c
-program CruiseControl {
-    int current_speed, target_speed;
+program SumNumbers {
+    int n, i;
+    int sum;
 
-    read(current_speed);
-    read(target_speed);
+    read(n);
+    sum = 0;
+    i = 1;
 
-    while (current_speed < target_speed) {
-        current_speed = current_speed + 2;
-        write(current_speed);
-    }
-}
-```
-
-### 3. LiDAR Sweep (Array Processing)
-Reads 8 distance values from a multi-zone LiDAR sensor into an array, then iterates through the array to find the closest detected obstacle.
-
-```c
-program LidarSweep {
-    real[8] sensors;
-    int i, n;
-    real min_dist, reading;
-
-    n = 8;
-    i = 0;
-
-    while (i < n) {
-        read(reading);
-        sensors[i] = reading;
+    while (i <= n) {
+        sum = sum + i;
         i = i + 1;
     }
 
-    min_dist = sensors[0];
+    write(sum);
+}
+```
+
+### Program 3: Minimum Element in an Array
+Reads 5 decimal values into a fixed-size array, finds the minimum element, and prints it.
+
+```c
+program ArrayMin {
+    real[5] numbers;
+    int i, n;
+    real min, current;
+
+    n = 5;
+    i = 0;
+
+    while (i < n) {
+        read(current);
+        numbers[i] = current;
+        i = i + 1;
+    }
+
+    min = numbers[0];
     i = 1;
 
     while (i < n) {
-        if (sensors[i] < min_dist) {
-            min_dist = sensors[i];
+        if (numbers[i] < min) {
+            min = numbers[i];
         }
         i = i + 1;
     }
 
-    write(min_dist);
+    write(min);
 }
 ```
