@@ -106,34 +106,3 @@ program SumNumbers {
 }
 ```
 
-### Program 3: Minimum Element in an Array
-Reads 5 decimal values into a fixed-size array, finds the minimum element, and prints it.
-
-```c
-program ArrayMin {
-    real[5] numbers;
-    int i, n;
-    real min, current;
-
-    n = 5;
-    i = 0;
-
-    while (i < n) {
-        read(current);
-        numbers[i] = current;
-        i = i + 1;
-    }
-
-    min = numbers[0];
-    i = 1;
-
-    while (i < n) {
-        if (numbers[i] < min) {
-            min = numbers[i];
-        }
-        i = i + 1;
-    }
-
-    write(min);
-}
-```

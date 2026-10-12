@@ -69,8 +69,8 @@ III. Syntax (tokens are specified between " and ")
                          | <if_statement>
                          | <while_statement>
 
-<if_statement> ::= "if" "(" <condition> ")" <statement>
-                 | "if" "(" <condition> ")" <statement> "else" <statement>
+<if_statement> ::= "if" "(" <condition> ")" <compound_statement>
+                 | "if" "(" <condition> ")" <compound_statement> "else" <compound_statement>
 
 <while_statement> ::= "while" "(" <condition> ")" <statement>
 
@@ -78,13 +78,8 @@ III. Syntax (tokens are specified between " and ")
 
 <relational_operator> ::= "==" | "!=" | "<" | "<=" | ">" | ">="
 
-<expression> ::= <expression> "+" <term>
-               | <expression> "-" <term>
-               | <term>
-
-<term> ::= <term> "*" <factor>
-         | <term> "/" <factor>
-         | <factor>
+<expression> ::= <term> { ("+" | "-") <term> }
+<term> ::= <factor> { ("*" | "/") <factor> }
 
 <factor> ::= "(" <expression> ")"
            | <variable>
