@@ -92,11 +92,7 @@ void st_print(const SymbolTable *st, FILE *out)
         fprintf(out, "  (empty)\n");
         return;
     }
-
-    /*
-     * Collect pointers into a temporary array so we can print in
-     * index order (0, 1, 2, …) rather than bucket order.
-     */
+    
     const char **keys = (const char **)malloc(count * sizeof(const char *));
     if (!keys) {
         fprintf(stderr, "Error: malloc failed in ST print\n");

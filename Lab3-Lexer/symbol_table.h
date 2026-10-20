@@ -27,7 +27,6 @@ typedef struct SymbolTable {
 } SymbolTable;
 
 /* Initialize an empty symbol table (all buckets NULL, index counter 0) */
-void st_init(SymbolTable *st);
 
 /*
  * Insert `key` into the symbol table.
@@ -53,5 +52,5 @@ void st_print(const SymbolTable *st, FILE *out);
 
 /* Free all allocated memory */
 void st_free(SymbolTable *st);
-
+    
 #endif /* SYMBOL_TABLE_H */

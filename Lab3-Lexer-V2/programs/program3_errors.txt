@@ -1,0 +1,10 @@
+program ErrorDemo {
+    int x;
+    real val;
+
+    x = 10;
+    val = 3.14;
+    val = val + #5;
+    x = x & 2;
+    write(val);
+}

@@ -1,0 +1,32 @@
+program ArrayProcessor {
+    int i, n;
+    real[5] values;
+    real current, sum, average, threshold;
+
+    n = 5;
+    i = 0;
+    sum = 0.0;
+
+    read(threshold);
+
+    while (i < n) {
+        read(current);
+        values[i] = current;
+        sum = sum + values[i];
+        i = i + 1;
+    }
+
+    average = (sum * 1.0) / (n * 1.0);
+    write(average);
+
+    i = 0;
+    while (i != n) {
+        if (values[i] <= threshold) {
+            write(values[i]);
+        } else {
+            values[i] = values[i] - 0.5;
+            write(values[i]);
+        }
+        i = i + 1;
+    }
+}
