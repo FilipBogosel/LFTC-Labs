@@ -1,0 +1,41 @@
+Token List for the Mini-Language
+=================================
+
+Tokens >= 256 (multi-character / semantic)
+------------------------------------------
+Code  Token           Category
+----  --------------- ----------------
+ 256  id              Identifier (ST)
+ 257  const           Constant   (ST)
+ 258  else            Reserved Word
+ 259  if              Reserved Word
+ 260  int             Reserved Word
+ 261  program         Reserved Word
+ 262  read            Reserved Word
+ 263  real            Reserved Word
+ 264  while           Reserved Word
+ 265  write           Reserved Word
+ 266  ==              Operator
+ 267  !=              Operator
+ 268  <=              Operator
+ 269  >=              Operator
+
+Single-character tokens (ASCII value as code)
+----------------------------------------------
+Code  Token  Category
+----  -----  ----------------
+  40  (      Separator
+  41  )      Separator
+  42  *      Operator
+  43  +      Operator
+  44  ,      Separator
+  45  -      Operator
+  47  /      Operator
+  59  ;      Separator
+  60  <      Operator
+  61  =      Operator (assign)
+  62  >      Operator
+  91  [      Separator
+  93  ]      Separator
+ 123  {      Separator
+ 125  }      Separator

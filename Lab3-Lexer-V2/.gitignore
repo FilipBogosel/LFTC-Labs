@@ -1,0 +1,7 @@
+# .idea files or vscode files
+.idea/
+.vscode/
+
+# Debug files
+*.log
+.cmake-build-debug/

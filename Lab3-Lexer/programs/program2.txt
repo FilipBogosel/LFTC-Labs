@@ -1,0 +1,35 @@
+program DataClassifier {
+    int count, limit, matches;
+    int[4] factors;
+    real baseline, factor, adjusted;
+
+    baseline = -10.5;
+    limit = +5;
+    matches = 0;
+    count = 0;
+
+    read(factor);
+
+    factors[0] = 1;
+    factors[1] = 2;
+    factors[2] = 3;
+    factors[3] = 4;
+
+    while (count < limit) {
+        read(adjusted);
+
+        if (adjusted == 0.0) {
+            matches = matches + 1;
+        }
+
+        if (adjusted >= baseline) {
+            write(adjusted * factors[1]);
+        } else {
+            write(adjusted / 2.0);
+        }
+
+        count = count + 1;
+    }
+
+    write(matches);
+}
